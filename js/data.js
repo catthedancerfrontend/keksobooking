@@ -1,4 +1,4 @@
-import { getRandomNumber, isValidLength, getRandomObjectArray, getRandomArrayElement, getArrayFrom } from './util.js'
+import { getRandomNumber, getRandomObjectArray, getRandomArrayElement, getArrayFrom } from './util.js'
 
 const MIN_VALUE = 1;
 const MAX_VALUE = 10;
@@ -6,10 +6,12 @@ const MIN_PRICE = 100;
 const MAX_PRICE = 1000;
 const MAX_FEATURES = 6;
 const OFFERS_COUNT = 10;
-const LAT_MIN = 35.65000.toFixed(5);
-const LAT_MAX = 35.70000.toFixed(5);
-const LNG_MIN = 139.70000.toFixed(5);
-const LNG_MAX = 139.80000.toFixed(5);
+const LAT_MIN = 35.65000;
+const LAT_MAX = 35.70001;
+const LNG_MIN = 139.70000;
+const LNG_MAX = 139.80001;
+let photoId = 0;
+
 
 const TYPE = [
   'palace',
@@ -89,33 +91,36 @@ const getRandomFeatureArrayElement = () => (getRandomArrayElement(FEATURES));
 
 const getRandomPhotoArrayElement = () => (getRandomArrayElement(PHOTOS));
 
-const author = {
-  avatar: `img/avatars/user${getRandomNumber(MIN_VALUE, MAX_VALUE)}.png`,
+const getRandomPhotoId = () => {
+  ++photoId;
+  return (photoId < 10) ? photoId = `0${photoId}` : photoId;  
 };
 
-const location = {
-  lat: getRandomNumber(LAT_MIN, LAT_MAX),
-  lng: getRandomNumber(LNG_MIN, LNG_MAX),
-};
-
-const offer = {
-  title: getRandomArrayElement(TITLE),
-  adress: `${location.lat}, ${location.lng}`,
-  price: getRandomNumber(MIN_PRICE, MAX_PRICE),
-  type: getRandomArrayElement(TYPE),
-  rooms: getRandomNumber(MIN_VALUE, MAX_VALUE),
-  guests: getRandomNumber(MIN_VALUE, MAX_VALUE),
-  checkin: getRandomArrayElement(CHECK_IN),
-  checkout: getRandomArrayElement(CHECK_OUT),
-  features: getArrayFrom(getRandomNumber(1, 6), getRandomFeatureArrayElement),
-  description: getRandomArrayElement(DESCRIPTION),
-  photos: getArrayFrom(getRandomNumber(MIN_VALUE, MAX_VALUE), getRandomPhotoArrayElement),
+const getRandomArbitrary = (min, max) => {
+  return Math.random() * (max - min) + min;
 };
 
 const getRandomOfferObject = () => ({
-  author,
-  offer,
-  location,	
+  author: {
+    avatar: `img/avatars/user${getRandomPhotoId()}.png`
+  },
+  offer: {
+    title: getRandomArrayElement(TITLE),
+    adress: `${location.lat}, ${location.lng}`,
+    price: getRandomNumber(MIN_PRICE, MAX_PRICE),
+    type: getRandomArrayElement(TYPE),
+    rooms: getRandomNumber(MIN_VALUE, MAX_VALUE),
+    guests: getRandomNumber(MIN_VALUE, MAX_VALUE),
+    checkin: getRandomArrayElement(CHECK_IN),
+    checkout: getRandomArrayElement(CHECK_OUT),
+    features: getArrayFrom(getRandomNumber(1, MAX_FEATURES), getRandomFeatureArrayElement),
+    description: getRandomArrayElement(DESCRIPTION),
+    photos: getArrayFrom(getRandomNumber(MIN_VALUE, MAX_VALUE), getRandomPhotoArrayElement),
+  },
+  location: {
+    lat: parseFloat(getRandomArbitrary(LAT_MIN, LAT_MAX).toFixed(5)),
+    lng: parseFloat(getRandomArbitrary(LNG_MIN, LNG_MAX).toFixed(5)),
+  },
 });
 
 const offers = getRandomObjectArray(OFFERS_COUNT, getRandomOfferObject);
