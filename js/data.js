@@ -93,36 +93,45 @@ const getRandomPhotoArrayElement = () => (getRandomArrayElement(PHOTOS));
 
 const getRandomPhotoId = () => {
   ++photoId;
-  return (photoId < 10) ? photoId = `0${photoId}` : photoId;  
+  if (photoId < 10) {
+    photoId = `0${photoId}`;
+  }
+  return photoId;
 };
 
 const getRandomArbitrary = (min, max) => {
   return Math.random() * (max - min) + min;
 };
 
-const getRandomOfferObject = () => ({
-  author: {
-    avatar: `img/avatars/user${getRandomPhotoId()}.png`
-  },
-  offer: {
-    title: getRandomArrayElement(TITLE),
-    adress: `${location.lat}, ${location.lng}`,
-    price: getRandomNumber(MIN_PRICE, MAX_PRICE),
-    type: getRandomArrayElement(TYPE),
-    rooms: getRandomNumber(MIN_VALUE, MAX_VALUE),
-    guests: getRandomNumber(MIN_VALUE, MAX_VALUE),
-    checkin: getRandomArrayElement(CHECK_IN),
-    checkout: getRandomArrayElement(CHECK_OUT),
-    features: getArrayFrom(getRandomNumber(1, MAX_FEATURES), getRandomFeatureArrayElement),
-    description: getRandomArrayElement(DESCRIPTION),
-    photos: getArrayFrom(getRandomNumber(MIN_VALUE, MAX_VALUE), getRandomPhotoArrayElement),
-  },
-  location: {
+const getRandomOfferObject = () => {
+  const coordinates = {
     lat: parseFloat(getRandomArbitrary(LAT_MIN, LAT_MAX).toFixed(5)),
     lng: parseFloat(getRandomArbitrary(LNG_MIN, LNG_MAX).toFixed(5)),
-  },
-});
+  };
+  return {
+    author: {
+      avatar: `img/avatars/user${getRandomPhotoId()}.png`
+    },
+    location: {
+      lat: coordinates.lat,
+      lng: coordinates.lng,
+    },
+    offer: {
+      title: getRandomArrayElement(TITLE),
+      address: `${coordinates.lat}, ${coordinates.lng}`,
+      price: getRandomNumber(MIN_PRICE, MAX_PRICE),
+      type: getRandomArrayElement(TYPE),
+      rooms: getRandomNumber(MIN_VALUE, MAX_VALUE),
+      guests: getRandomNumber(MIN_VALUE, MAX_VALUE),
+      checkin: getRandomArrayElement(CHECK_IN),
+      checkout: getRandomArrayElement(CHECK_OUT),
+      features: getArrayFrom(getRandomNumber(1, MAX_FEATURES), getRandomFeatureArrayElement),
+      description: getRandomArrayElement(DESCRIPTION),
+      photos: getArrayFrom(getRandomNumber(MIN_VALUE, MAX_VALUE), getRandomPhotoArrayElement),
+    },
+  };
+};
 
 const offers = getRandomObjectArray(OFFERS_COUNT, getRandomOfferObject);
 
-console.log(offers);
+export { offers };
