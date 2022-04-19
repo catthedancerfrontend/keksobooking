@@ -56,5 +56,3 @@ renderPopup(offers.splice(0, 1));
 
 const canvas = document.querySelector('#map-canvas');
 canvas.appendChild(popupFragment);
-
-console.log(canvas);
