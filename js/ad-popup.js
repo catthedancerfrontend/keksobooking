@@ -38,7 +38,7 @@ const renderPopup = (offers) => {
       img.src = photo;
       img.height = 40;
       img.width = 45;
-      img.alt = 'Фотография жилья'
+      img.alt = 'Фотография жилья';
       photoFragment.appendChild(img);
     });
 

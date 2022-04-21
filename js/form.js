@@ -1,8 +1,10 @@
+import { formPristine } from './validation.js';
+
 const formElement = document.querySelector('.ad-form');
 const formFieldsets = formElement.querySelectorAll('fieldset');
 
 const setFormDisabledState = (isDisabled) => {
-  isDisabled 
+  isDisabled
     ? formElement.classList.add('ad-form--disabled')
     : formElement.classList.remove('ad-form--disabled');
 
@@ -11,4 +13,10 @@ const setFormDisabledState = (isDisabled) => {
 
 setFormDisabledState(true);
 
-setTimeout(() => setFormDisabledState(false), 5000);
+formElement.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  formPristine.validate();
+});
+
+setTimeout(() => setFormDisabledState(false), 50);
+
