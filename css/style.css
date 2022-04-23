@@ -1057,3 +1057,8 @@
   .hidden {
     display: none;
   }
+
+  .leaflet-popup-content-wrapper {
+    display: block;
+    height: 100%;
+  }

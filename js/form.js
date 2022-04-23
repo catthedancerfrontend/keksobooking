@@ -2,6 +2,8 @@ import { formPristine } from './validation.js';
 
 const formElement = document.querySelector('.ad-form');
 const formFieldsets = formElement.querySelectorAll('fieldset');
+const submitButton = formElement.querySelector('.ad-form__submit');
+
 
 const setFormDisabledState = (isDisabled) => {
   isDisabled
@@ -18,5 +20,10 @@ formElement.addEventListener('submit', (evt) => {
   formPristine.validate();
 });
 
-setTimeout(() => setFormDisabledState(false), 50);
+submitButton.addEventListener('keypress', (evt) => {
+  if (evt.key === 'Enter') {
+    evt.preventDefault();
+  }
+});
 
+setTimeout(() => setFormDisabledState(false), 50);
