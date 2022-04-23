@@ -21,11 +21,8 @@ noUiSlider.create(slider, {
 });
 
 slider.noUiSlider.on('update', (values, handle) => {
-
-  price.value = slider.noUiSlider.get();
-
   const value = values[handle];
-  if (handle) {
+  if (value) {
     price.value = value;
   }
 });
@@ -33,3 +30,11 @@ slider.noUiSlider.on('update', (values, handle) => {
 price.addEventListener('change', () => {
   slider.noUiSlider.set([price.value]);
 });
+
+const resetSlider = () => {
+  slider.noUiSlider.set(DEFAULT_PRICE);
+  price.value = DEFAULT_PRICE;
+  price.min = DEFAULT_PRICE;
+};
+
+export { resetSlider };

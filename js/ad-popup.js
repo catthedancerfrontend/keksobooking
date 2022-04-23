@@ -1,7 +1,32 @@
-// import { offers } from './data.js';
 
 const cardPopup = document.querySelector('#card').content.querySelector('article');
 
+const getFeaturesTemplate = (features) => {
+  const featureFragment = document.createDocumentFragment();
+  features.forEach((feature) => {
+    const listItem = document.createElement('li');
+    listItem.classList.add('popup__feature', `popup__feature--${feature}`);
+
+    if (listItem) {
+      featureFragment.appendChild(listItem);
+    }
+  });
+  return featureFragment;
+};
+
+const getPhotosTemplate = (photos) => {
+  const photoTemplate = document.createDocumentFragment();
+  photos.forEach((photo) => {
+    const img = document.createElement('img');
+    img.classList.add('popup__photo');
+    img.src = photo;
+    img.height = 40;
+    img.width = 45;
+    img.alt = 'Фотография жилья';
+    photoTemplate.appendChild(img);
+  });
+  return photoTemplate;
+};
 
 const renderPopup = (offer) => {
   const cardPopupClone = cardPopup.cloneNode(true);
@@ -13,43 +38,21 @@ const renderPopup = (offer) => {
   cardPopupClone.querySelector('.popup__description').textContent = offer.offer.description;
 
   const listContainer = cardPopupClone.querySelector('.popup__features');
-  const listFragment = document.createDocumentFragment();
-
-  offer.offer.features.forEach((feature) => {
-    const listItem = document.createElement('li');
-    listItem.classList.add('popup__feature', `popup__feature--${feature}`);
-
-    if (listItem) {
-      listFragment.appendChild(listItem);
-    }
-  });
-
-  listContainer.innerHTML = '';
-  listContainer.appendChild(listFragment);
+  if (offer.offer.features) {
+    listContainer.innerHTML = '';
+    listContainer.appendChild(getFeaturesTemplate(offer.offer.features));
+  }
 
   const photoContainer = cardPopupClone.querySelector('.popup__photos');
-  const photoFragment = document.createDocumentFragment();
-
-  offer.offer.photos.forEach((photo) => {
-    const img = document.createElement('img');
-    img.classList.add('popup__photo');
-    img.src = photo;
-    img.height = 40;
-    img.width = 45;
-    img.alt = 'Фотография жилья';
-    photoFragment.appendChild(img);
-  });
-
-  photoContainer.innerHTML = '';
-  photoContainer.appendChild(photoFragment);
+  if (offer.offer.photos) {
+    photoContainer.innerHTML = '';
+    photoContainer.appendChild(getPhotosTemplate(offer.offer.photos));
+  }
 
   const avatar = cardPopupClone.querySelector('.popup__avatar');
   avatar.src = offer.author.avatar;
 
   return cardPopupClone;
 };
-
-// const canvas = document.querySelector('#map-canvas');
-// canvas.appendChild(popupFragment);
 
 export { renderPopup };
