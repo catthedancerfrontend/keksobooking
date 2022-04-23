@@ -1,5 +1,7 @@
-import { getRandomNumber, getRandomObjectArray, getRandomArrayElement, getArrayFrom } from './util.js'
+import { getRandomNumber, getRandomObjectArray, getRandomArrayElement, getArrayFrom } from './util.js';
 
+const MIN_PHOTOS = 1;
+const MAX_PHOTOS = 3;
 const MIN_VALUE = 1;
 const MAX_VALUE = 10;
 const MIN_PRICE = 100;
@@ -99,9 +101,7 @@ const getRandomPhotoId = () => {
   return photoId;
 };
 
-const getRandomArbitrary = (min, max) => {
-  return Math.random() * (max - min) + min;
-};
+const getRandomArbitrary = (min, max) => Math.random() * (max - min) + min;
 
 const getRandomOfferObject = () => {
   const coordinates = {
@@ -110,7 +110,7 @@ const getRandomOfferObject = () => {
   };
   return {
     author: {
-      avatar: `img/avatars/user${getRandomPhotoId()}.png`
+      avatar: `img/avatars/user${getRandomPhotoId()}.png`,
     },
     location: {
       lat: coordinates.lat,
@@ -127,7 +127,7 @@ const getRandomOfferObject = () => {
       checkout: getRandomArrayElement(CHECK_OUT),
       features: getArrayFrom(getRandomNumber(1, MAX_FEATURES), getRandomFeatureArrayElement),
       description: getRandomArrayElement(DESCRIPTION),
-      photos: getArrayFrom(getRandomNumber(MIN_VALUE, MAX_VALUE), getRandomPhotoArrayElement),
+      photos: getArrayFrom(getRandomNumber(MIN_PHOTOS, MAX_PHOTOS), getRandomPhotoArrayElement),
     },
   };
 };
