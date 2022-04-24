@@ -1,7 +1,7 @@
-import { offers } from './data.js';
 import { renderPopup } from './ad-popup.js';
 
 const address = document.querySelector('#address');
+const MAP_ZOOM = 12;
 
 const TOKYO_COORDINATES = {
   lat: 35.68173,
@@ -12,7 +12,7 @@ const map = L.map('map-canvas')
   .setView({
     lat: TOKYO_COORDINATES.lat,
     lng: TOKYO_COORDINATES.lng,
-  }, 12);
+  }, MAP_ZOOM);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -56,17 +56,33 @@ markerMain.on('moveend', (evt) => {
 });
 markerMain.addTo(map);
 
-offers.forEach((offer) => {
-  const {lat, lng} = offer.location;
-  const marker = L.marker({
-    lat,
-    lng,
-  },
-  {
-    icon:pinIconOrdinary,
+const renderMarkers = (offers) => {
+  offers.forEach((offer) => {
+    const {lat, lng} = offer.location;
+    const marker = L.marker({
+      lat,
+      lng,
+    },
+    {
+      icon:pinIconOrdinary,
+    });
+    marker
+      .addTo(map)
+      .bindPopup(renderPopup(offer));
   });
-  marker
-    .addTo(map)
-    .bindPopup(renderPopup(offer));
-});
+};
 
+const resetMap = () => {
+  markerMain.setLatLng({
+    lat: TOKYO_COORDINATES.lat,
+    lng: TOKYO_COORDINATES.lng,
+  });
+  map.setView({
+    lat: TOKYO_COORDINATES.lat,
+    lng: TOKYO_COORDINATES.lng,
+  }, MAP_ZOOM);
+  map.closePopup();
+  setAddress(`${TOKYO_COORDINATES.lat}, ${TOKYO_COORDINATES.lng}`);
+};
+
+export { renderMarkers, resetMap };

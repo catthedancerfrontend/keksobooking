@@ -13,4 +13,6 @@ const getArrayFrom = (count, callback) => Array.from({length: count}, callback);
 
 const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
 
-export { getRandomNumber, isValidLength, getRandomObjectArray, getRandomArrayElement, getArrayFrom };
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export { getRandomNumber, isValidLength, getRandomObjectArray, getRandomArrayElement, getArrayFrom, isEscapeKey };
