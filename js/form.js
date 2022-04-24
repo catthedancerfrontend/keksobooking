@@ -4,6 +4,7 @@ import { showAlert } from './alert.js';
 import { resetMap } from './map.js';
 import { resetSlider } from './slider-element.js';
 import { showSuccessMessage, showFailMessage } from './alert.js';
+import { isEscapeKey } from './util.js';
 
 const formElement = document.querySelector('.ad-form');
 const formFieldsets = formElement.querySelectorAll('fieldset');
@@ -36,8 +37,6 @@ const unblockResetButton = () => {
   resetButton.disabled = false;
 };
 
-setFormDisabledState(true);
-
 const resetForm = () => {
   formElement.reset();
   resetMap();
@@ -49,7 +48,6 @@ resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetForm();
 });
-
 
 formElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
@@ -77,9 +75,9 @@ formElement.addEventListener('submit', (evt) => {
 });
 
 document.addEventListener('keypress', (evt) => {
-  if (evt.key === 'Enter') { // use isEscKey function
+  if (isEscapeKey(evt)) { // use isEscKey function
     evt.preventDefault();
   }
 });
 
-setTimeout(() => setFormDisabledState(false), 50);
+export { setFormDisabledState };

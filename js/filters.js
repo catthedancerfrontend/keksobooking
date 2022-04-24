@@ -16,6 +16,4 @@ const setFiltersDisbledState = (isDisabled) => {
   filtersCheckboxList.forEach((checkbox) => (checkbox.disabled = isDisabled));
 };
 
-setFiltersDisbledState(true);
-
-setTimeout(() => setFiltersDisbledState(false), 3000);
+export { setFiltersDisbledState };

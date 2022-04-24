@@ -5,9 +5,11 @@ import './filters.js';
 import './validation.js';
 import './map.js';
 import './slider-element.js';
-import { getData } from './api.js';
-import { renderMarkers } from './map.js';
-// import {setUserFormSubmit} from './form.js';
+import './map-filters.js';
+import './data.js';
+import './init.js';
+import { init } from './init.js';
+import {deactivateAll} from './init.js';
 
-getData(renderMarkers);
-// setUserFormSubmit();
+deactivateAll();
+init();

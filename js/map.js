@@ -44,6 +44,8 @@ const markerMain = L.marker(
   },
 );
 
+const markerGroup = L.layerGroup().addTo(map);
+
 const setAddress = (value) => {
   address.value = value;
 };
@@ -67,7 +69,7 @@ const renderMarkers = (offers) => {
       icon:pinIconOrdinary,
     });
     marker
-      .addTo(map)
+      .addTo(markerGroup)
       .bindPopup(renderPopup(offer));
   });
 };
@@ -85,4 +87,6 @@ const resetMap = () => {
   setAddress(`${TOKYO_COORDINATES.lat}, ${TOKYO_COORDINATES.lng}`);
 };
 
-export { renderMarkers, resetMap };
+const clearMarkers = () => markerGroup.clearLayers();
+
+export { renderMarkers, resetMap, clearMarkers };
