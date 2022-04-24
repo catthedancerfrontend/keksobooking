@@ -1,9 +1,10 @@
 import { showAlert } from './alert.js';
+import { setOffers } from './data.js';
 
 const GET_URL = 'https://25.javascript.pages.academy/keksobooking/data';
 const POST_URL = 'https://25.javascript.pages.academy/keksobooking';
 
-const getData = (onSuccess) => {
+const getData = (onSuccess, onFail) => {
   fetch(
     GET_URL,
   )
@@ -14,8 +15,12 @@ const getData = (onSuccess) => {
 
       throw new Error(`${response.status} ${response.statusText}`);
     })
-    .then((offers) => onSuccess(offers))
+    .then((offers) => {
+      onSuccess(offers);
+      setOffers(offers);
+    })
     .catch((err) => {
+      onFail(err);
       showAlert(err);
     });
 };
@@ -35,6 +40,5 @@ const sendData = (data, onSuccess, onError) => {
       onError(err);
     });
 };
-
 
 export { getData, sendData };

@@ -2,12 +2,14 @@ const formElement = document.querySelector('.ad-form');
 const title = formElement.querySelector('#title');
 const pricePerNight = formElement.querySelector('#price');
 const propertyType = formElement.querySelector('#type');
-const MAX_VALUE = 100000;
 const roomsAmount = formElement.querySelector('#room_number');
 const propertyCapacity = formElement.querySelector('#capacity');
 const submitButton = formElement.querySelector('.ad-form__submit');
 const checkIn = formElement.querySelector('#timein');
 const checkOut = formElement.querySelector('#timeout');
+const MAX_VALUE = 100000;
+const MAX_LENGTH = 100;
+const MIN_LENGTH = 30;
 
 const formPristine = new Pristine(formElement, {
   classTo: 'ad-form__element',
@@ -41,7 +43,7 @@ const roomOptions = {
   '100': ['0'],
 };
 
-const validateTitleField = (value) => (value.length >= 30 && value.length <= 100);
+const validateTitleField = (value) => (value.length >= MIN_LENGTH && value.length <= MAX_LENGTH);
 
 const validatePriceField = (value) => (value >= minPrice[propertyType.value] && value <= MAX_VALUE);
 
@@ -89,7 +91,6 @@ propertyCapacity.addEventListener('change', () => {
 roomsAmount.addEventListener('change', () => {
   roomsAmount.value && formPristine.validate(roomsAmount);
 });
-
 
 submitButton.addEventListener('submit', (evt) => {
   if (!formPristine.validate()) {

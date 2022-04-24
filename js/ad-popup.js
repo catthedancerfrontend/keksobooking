@@ -1,4 +1,3 @@
-
 const cardPopup = document.querySelector('#card').content.querySelector('article');
 
 const getFeaturesTemplate = (features) => {

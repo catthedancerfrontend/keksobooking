@@ -44,7 +44,6 @@ const showMessage = (messageTemplate) => {
   document.body.append(message);
 };
 
-
 const showSuccessMessage = () => showMessage(successPopup);
 const showFailMessage = () => showMessage(errorPopup);
 

@@ -5,8 +5,6 @@ const getRandomNumber = function (from, to) {
   return Math.floor(Math.random() * (Math.floor(to) - Math.ceil(from) + 1) + Math.ceil(from));
 };
 
-const isValidLength = (str, maxLength) => str.length <= maxLength;
-
 const getRandomObjectArray = (count, callback) => Array.from({length: count}, callback);
 
 const getArrayFrom = (count, callback) => Array.from({length: count}, callback);
@@ -15,4 +13,16 @@ const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { getRandomNumber, isValidLength, getRandomObjectArray, getRandomArrayElement, getArrayFrom, isEscapeKey };
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+
+    timeoutDelay;
+  };
+}
+
+export { getRandomNumber, getRandomObjectArray, getRandomArrayElement, getArrayFrom, isEscapeKey, debounce };
