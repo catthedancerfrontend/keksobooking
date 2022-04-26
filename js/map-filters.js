@@ -10,11 +10,11 @@ const housingRooms = mapFilters.querySelector('#housing-rooms');
 const housingGuests = mapFilters.querySelector('#housing-guests');
 const housingFeatures = mapFilters.querySelector('#housing-features');
 const conditionerCheckbox = mapFilters.querySelector('#filter-conditioner');
-const elevatorCheckbox = mapFilters.querySelector('#filter-elevator')
-const washerCheckbox = mapFilters.querySelector('#filter-washer')
-const parkingCheckbox = mapFilters.querySelector('#filter-parking')
-const dishwasherCheckbox = mapFilters.querySelector('#filter-dishwasher')
-const wifiCheckbox = mapFilters.querySelector('#filter-wifi')
+const elevatorCheckbox = mapFilters.querySelector('#filter-elevator');
+const washerCheckbox = mapFilters.querySelector('#filter-washer');
+const parkingCheckbox = mapFilters.querySelector('#filter-parking');
+const dishwasherCheckbox = mapFilters.querySelector('#filter-dishwasher');
+const wifiCheckbox = mapFilters.querySelector('#filter-wifi');
 
 const filterElements = [
   housingType,

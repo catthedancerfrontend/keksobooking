@@ -1,4 +1,4 @@
-import { minPrice, PropertyTypes } from './form-properties.js';
+import { minPrice} from './form-properties.js';
 
 const slider = document.querySelector('.ad-form__slider');
 const price = document.querySelector('#price');
@@ -35,9 +35,8 @@ price.addEventListener('change', () => {
 });
 
 housingType.addEventListener('change', () => {
-  if (housingType.value === PropertyTypes[housingType.value]) {
-    slider.noUiSlider.set([minPrice[housingType.value]]);
-  }
+  slider.noUiSlider.set([minPrice[housingType.value]] || DEFAULT_PRICE);
+  price.placeholder = minPrice[housingType.value] || DEFAULT_PRICE;
 });
 
 const resetSlider = () => {

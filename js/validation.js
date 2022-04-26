@@ -12,6 +12,7 @@ const checkOut = formElement.querySelector('#timeout');
 const MAX_VALUE = 100000;
 const MAX_LENGTH = 100;
 const MIN_LENGTH = 30;
+const DEFAULT_PRICE = 1000;
 
 const formPristine = new Pristine(formElement, {
   classTo: 'ad-form__element',
@@ -26,7 +27,7 @@ const validateTitleField = (value) => (value.length >= MIN_LENGTH && value.lengt
 
 const validatePriceField = (value) => (value >= minPrice[propertyType.value] && value <= MAX_VALUE);
 
-const getPriceErrorMessage = () => `Минимальная цена ${minPrice[propertyType.value]}, максимальная цена ${MAX_VALUE}`;
+const getPriceErrorMessage = () => `Минимальная цена ${minPrice[propertyType.value] || DEFAULT_PRICE}, максимальная цена ${MAX_VALUE}`;
 
 const validateAmountOfGuests =() => (roomOptions[roomsAmount.value].includes(propertyCapacity.value));
 
