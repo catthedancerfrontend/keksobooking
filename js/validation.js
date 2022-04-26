@@ -1,3 +1,5 @@
+import { minPrice, roomOptions } from './form-properties.js';
+
 const formElement = document.querySelector('.ad-form');
 const title = formElement.querySelector('#title');
 const pricePerNight = formElement.querySelector('#price');
@@ -19,29 +21,6 @@ const formPristine = new Pristine(formElement, {
   errorTextTag: 'span',
   errorTextClass: 'ad-form__error-text',
 });
-
-const PropertyTypes = {
-  bungalow: 'bungalow',
-  flat: 'flat',
-  hotel: 'hotel',
-  house: 'house',
-  palace: 'palace',
-};
-
-const minPrice = {
-  [PropertyTypes.bungalow]: 0,
-  [PropertyTypes.flat]: 1000,
-  [PropertyTypes.hotel]: 3000,
-  [PropertyTypes.house]: 5000,
-  [PropertyTypes.palace]: 10000,
-};
-
-const roomOptions = {
-  '1': ['1'],
-  '2': ['1', '2'],
-  '3': ['1', '2', '3'],
-  '100': ['0'],
-};
 
 const validateTitleField = (value) => (value.length >= MIN_LENGTH && value.length <= MAX_LENGTH);
 
@@ -84,12 +63,11 @@ propertyType.addEventListener('change', () => {
   pricePerNight.value && formPristine.validate(pricePerNight);
 });
 
-propertyCapacity.addEventListener('change', () => {
-  propertyCapacity.value && formPristine.validate(propertyCapacity);
-});
-
-roomsAmount.addEventListener('change', () => {
-  roomsAmount.value && formPristine.validate(roomsAmount);
+[propertyCapacity, roomsAmount].forEach((element) => {
+  element.addEventListener('change', () => {
+    propertyCapacity.value && formPristine.validate(propertyCapacity);
+    roomsAmount.value && formPristine.validate(roomsAmount);
+  });
 });
 
 submitButton.addEventListener('submit', (evt) => {

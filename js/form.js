@@ -1,10 +1,11 @@
 import { formPristine } from './validation.js';
 import { sendData } from './api.js';
-import { showAlert } from './alert.js';
 import { resetMap } from './map.js';
 import { resetSlider } from './slider-element.js';
-import { showSuccessMessage, showFailMessage } from './alert.js';
+import { showSuccessMessage, showFailMessage, showAlert } from './alert.js';
 import { isEscapeKey } from './util.js';
+import { resetMapFilterForm } from './map-filters.js';
+
 
 const formElement = document.querySelector('.ad-form');
 const formFieldsets = formElement.querySelectorAll('fieldset');
@@ -19,29 +20,22 @@ const setFormDisabledState = (isDisabled) => {
   formFieldsets.forEach((fieldset) => (fieldset.disabled = isDisabled));
 };
 
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = 'Публикую...';
+const setSubmitButtonState = (isDisabled) => {
+  submitButton.disabled = isDisabled;
+  submitButton.textContent = isDisabled ? 'Публикую...' : 'Опубликовать';
 };
 
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Опубликовать';
+const setResetButtonState = (isDisabled) => {
+  resetButton.disabled = isDisabled;
 };
 
-const blockResetButton = () => {
-  resetButton.disabled = true;
-};
-
-const unblockResetButton = () => {
-  resetButton.disabled = false;
-};
 
 const resetForm = () => {
   formElement.reset();
+  formPristine.reset();
   resetMap();
   resetSlider();
-  // reset map filters
+  resetMapFilterForm();
 };
 
 resetButton.addEventListener('click', (evt) => {
@@ -49,33 +43,41 @@ resetButton.addEventListener('click', (evt) => {
   resetForm();
 });
 
+const onFormSubmitSuccess = () => {
+  showSuccessMessage();
+  setSubmitButtonState(false);
+  setResetButtonState(false);
+  formPristine.reset();
+  resetForm();
+};
+
+const onFormSubmitFail = () => {
+  showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+  setSubmitButtonState(false);
+  setResetButtonState(false);
+  showFailMessage();
+};
+
 formElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = formPristine.validate();
   if (isValid) {
-    blockSubmitButton();
-    blockResetButton();
+    setSubmitButtonState(true);
+    setResetButtonState(true);
     sendData(
       new FormData(evt.target),
       () => {
-        showSuccessMessage();
-        unblockSubmitButton();
-        unblockResetButton();
-        formPristine.reset();
-        resetForm();
+        onFormSubmitSuccess();
       },
       () => {
-        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-        unblockSubmitButton();
-        unblockResetButton();
-        showFailMessage();
+        onFormSubmitFail();
       },
     );
   }
 });
 
 document.addEventListener('keypress', (evt) => {
-  if (isEscapeKey(evt)) { // use isEscKey function
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
   }
 });

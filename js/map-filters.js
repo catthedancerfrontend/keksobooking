@@ -1,6 +1,7 @@
 import { getOffers } from './data.js';
 import { renderMarkers, clearMarkers } from './map.js';
 import { debounce } from './util.js';
+import { PriceType } from './form-properties.js';
 
 const mapFilters = document.querySelector('.map__filters');
 const housingType = mapFilters.querySelector('#housing-type');
@@ -15,7 +16,7 @@ const parkingCheckbox = mapFilters.querySelector('#filter-parking')
 const dishwasherCheckbox = mapFilters.querySelector('#filter-dishwasher')
 const wifiCheckbox = mapFilters.querySelector('#filter-wifi')
 
-const options = [
+const filterElements = [
   housingType,
   housingPrice,
   housingRooms,
@@ -29,27 +30,20 @@ const options = [
 ];
 
 const DEFAULT_VALUE = 'any';
-const PRICE_LOWEST = 10000;
-const PRICE_HIGHEST = 50000;
-const PRICE_RANGE = 'middle';
-const PRICE_LOW = 'low';
-const PRICE_HIGH = 'high';
 const MAX_MARKERS = 10;
 
 const filterByType = (offer) => housingType.value === offer.type || housingType.value === DEFAULT_VALUE;
 
 const filterByPrice = (offer) => {
-  if (housingPrice.value === DEFAULT_VALUE) {
-    return 1;
-  }
-  if (housingPrice.value === PRICE_RANGE) {
-    return offer.price >= PRICE_LOWEST && offer.price < PRICE_HIGHEST;
-  }
-  if (housingPrice.value === PRICE_LOW) {
-    return offer.price < PRICE_LOWEST;
-  }
-  if (housingPrice.value === PRICE_HIGH) {
-    return offer.price >= PRICE_HIGHEST;
+  switch (housingPrice.value) {
+    case DEFAULT_VALUE:
+      return 1;
+    case PriceType.MIDDLE:
+      return offer.price >= PriceType.LOWEST && offer.price < PriceType.HIGHEST;
+    case PriceType.LOW:
+      return offer.price < PriceType.LOWEST;
+    case PriceType.HIGH:
+      return offer.price >= PriceType.HIGHEST;
   }
 };
 
@@ -73,10 +67,10 @@ const getFeaturesRank = (offer) => {
   for (let i = 0; i < checkedFeatures.length; i++) {
     if (offer.features.includes(checkedFeatures[i].value)) {
       rank++;
-    } else {
-      rank = 0;
-      break;
+      continue;
     }
+    rank = 0;
+    break;
   }
 
   return rank;
@@ -91,13 +85,24 @@ const compareOffers = (offerA, offerB) => {
   return rankB - rankA;
 };
 
-const filter = (offers) => offers.filter(({offer}) => filterByType(offer) && filterByRooms(offer) && filterByGuests(offer) && filterByPrice(offer) && filterByFeatures(offer))
+const filter = (offers) => offers.filter(({offer}) =>
+  filterByType(offer)
+  && filterByRooms(offer)
+  && filterByGuests(offer)
+  && filterByPrice(offer)
+  && filterByFeatures(offer))
   .sort(compareOffers);
 
-options.forEach((option) => {
-  option.addEventListener('change', debounce(() => {
+filterElements.forEach((element) => {
+  element.addEventListener('change', debounce(() => {
     const filteredOffers = filter(getOffers());
     clearMarkers();
     renderMarkers(filteredOffers.slice(0, MAX_MARKERS));
   }));
 });
+
+const resetMapFilterForm = () => {
+  mapFilters.reset();
+};
+
+export { resetMapFilterForm };

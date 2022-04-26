@@ -10,8 +10,7 @@ import './data.js';
 import './init.js';
 import './load-avatar.js';
 import './load-photo.js';
-import { init } from './init.js';
-import {deactivateAll} from './init.js';
+import { init, deactivateAll } from './init.js';
 
 deactivateAll();
 init();

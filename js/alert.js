@@ -30,7 +30,7 @@ const showMessage = (messageTemplate) => {
   const onEscKey = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      removeMessage(message);
+      removeMessage();
     }
   };
 
