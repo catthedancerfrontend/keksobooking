@@ -29,11 +29,18 @@ const Rooms = {
   HUNDRED: '100',
 };
 
+const GuestCount = {
+  UP_TO_ONE: ['1'],
+  UP_TO_TWO: ['1', '2'],
+  UP_TO_TREE: ['1', '2', '3'],
+  ZERO: ['0'],
+};
+
 const roomOptions = {
-  [Rooms.ONE]: ['1'],
-  [Rooms.TWO]: ['1', '2'],
-  [Rooms.THREE]: ['1', '2', '3'],
-  [Rooms.HUNDRED]: ['0'],
+  [Rooms.ONE]: [GuestCount.UP_TO_ONE],
+  [Rooms.TWO]: [GuestCount.UP_TO_TWO],
+  [Rooms.THREE]: [GuestCount.UP_TO_TREE],
+  [Rooms.HUNDRED]: [GuestCount.ZERO],
 };
 
 const PriceType = {

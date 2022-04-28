@@ -47,7 +47,7 @@ const renderPopup = (offer) => {
   listContainer.innerHTML = '';
   photoContainer.innerHTML = '';
 
-  if (offer.offer.features) {
+  if (offer.offer.features && offer.offer.features.length !== 0) {
     listContainer.appendChild(getFeaturesTemplate(offer.offer.features));
   }
 

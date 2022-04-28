@@ -7,7 +7,6 @@ import './map.js';
 import './slider-element.js';
 import './map-filters.js';
 import './data.js';
-import './init.js';
 import './load-avatar.js';
 import './load-photo.js';
 import { init, deactivateAll } from './init.js';
