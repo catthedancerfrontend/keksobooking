@@ -1,0 +1,15 @@
+import './util.js';
+import './ad-popup.js';
+import './form.js';
+import './filters.js';
+import './validation.js';
+import './map.js';
+import './slider-element.js';
+import './map-filters.js';
+import './data.js';
+import './load-avatar.js';
+import './load-photo.js';
+import { init, deactivateAll } from './init.js';
+
+deactivateAll();
+init();
